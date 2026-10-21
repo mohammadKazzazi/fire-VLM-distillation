@@ -2,10 +2,11 @@
 
 Official implementation of [Distilling Vision-Language Models for On-Device Fire Understanding](https://arxiv.org/abs/2609.05782).
 
-**Mohammad Kazzazi**<sup>1\*</sup>, **Zixuan Liu**<sup>2\*†</sup>, **Siavash Khajavi**<sup>2†</sup>
+**Mohammad Kazzazi**<sup>1\*</sup>, **Zixuan Liu**<sup>2\*†</sup>, **Siavash Khajavi**<sup>2,3†</sup>
 
 <sup>1</sup>EPFL, Lausanne, Switzerland  
-<sup>2</sup>Detectium, Espoo, Finland
+<sup>2</sup>Detectium, Espoo, Finland  
+<sup>3</sup>Aalto University, Espoo, Finland
 
 <sup>\*</sup>Equal contribution. <sup>†</sup>Corresponding authors.  
 [seyedmohammad.ojaghkazazi@epfl.ch](mailto:seyedmohammad.ojaghkazazi@epfl.ch), [zixuan@detectium.io](mailto:zixuan@detectium.io), [siavash.khajavi@aalto.fi](mailto:siavash.khajavi@aalto.fi)
