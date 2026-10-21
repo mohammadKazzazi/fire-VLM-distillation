@@ -1,0 +1,30 @@
+# Local offline fire-detect service (GPU host with NVIDIA Container Toolkit)
+#
+#   cd /home/ubuntu/llava-test
+#   docker compose -f Deploy/docker/docker-compose.yml up --build
+
+services:
+  fire-detect:
+    build:
+      context: ../..
+      dockerfile: Deploy/docker/Dockerfile.edge
+    image: fire-detect-edge:latest
+    runtime: nvidia
+    environment:
+      HF_HUB_OFFLINE: "1"
+      TRANSFORMERS_OFFLINE: "1"
+      STUDENT_PRESET: qwen0.5b
+      DEVICE: cuda
+    volumes:
+      - ../bundles:/opt/fire-detect/bundles:ro
+      - ../config/students.env:/opt/fire-detect/config/students.env:ro
+    command:
+      - --image
+      - /opt/fire-detect/samples/demo.jpg
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

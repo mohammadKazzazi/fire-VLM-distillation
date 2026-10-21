@@ -1,0 +1,26 @@
+{
+  "base": {
+    "pred_lines": 1452,
+    "matched_eval": 0,
+    "missing_ref": 0,
+    "ambiguous_ref": 0,
+    "ambiguous_pred": 1452,
+    "accuracy": 0.0,
+    "tp": 0,
+    "fp": 0,
+    "tn": 0,
+    "fn": 0
+  },
+  "finetuned": {
+    "pred_lines": 1452,
+    "matched_eval": 1452,
+    "missing_ref": 0,
+    "ambiguous_ref": 0,
+    "ambiguous_pred": 0,
+    "accuracy": 0.9993112947658402,
+    "tp": 754,
+    "fp": 1,
+    "tn": 697,
+    "fn": 0
+  }
+}

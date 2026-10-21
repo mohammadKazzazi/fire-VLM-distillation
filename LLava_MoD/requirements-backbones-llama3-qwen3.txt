@@ -1,0 +1,13 @@
+# Optional upgrade for Llama 3.1/3.2 and Qwen3 backbones.
+# Install in the training conda env AFTER base requirements.txt.
+#
+# Llama 3 only (torch 2.1.2 compatible):
+#   pip install 'transformers>=4.43,<4.47' 'tokenizers>=0.19'
+#
+# Qwen3 also needs newer transformers (may require torch upgrade):
+#   pip install -r requirements-backbones-llama3-qwen3.txt
+#
+# Llama 3.1 needs transformers>=4.43; Qwen3 needs transformers>=4.51.
+transformers>=4.51.0,<5
+tokenizers>=0.21.0
+accelerate>=0.27.0

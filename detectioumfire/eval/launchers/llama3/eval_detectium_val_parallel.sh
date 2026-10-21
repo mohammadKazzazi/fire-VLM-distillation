@@ -1,0 +1,1 @@
+../qwen2.5/eval_detectium_val_parallel.sh

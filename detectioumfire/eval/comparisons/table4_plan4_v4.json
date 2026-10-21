@@ -1,0 +1,17 @@
+{
+  "Plan 4 v4 kd_lm": {
+    "burning_object": {
+      "accuracy": 0.6936339522546419,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8209459459459459,
+      "n": 296
+    },
+    "fire_severity": {
+      "accuracy": 0.8896457765667575,
+      "n": 734
+    },
+    "fire_rows_in_val": 754
+  }
+}

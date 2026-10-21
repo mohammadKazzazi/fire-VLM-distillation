@@ -1,0 +1,2 @@
+# Extra vision encoders for LLaVA-MoD edge ablation
+open-clip-torch>=2.24.0

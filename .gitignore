@@ -1,0 +1,65 @@
+# Secrets
+*.pem
+*.key
+.env
+!.env.example
+credentials*.json
+
+# Models / checkpoints / weights
+checkpoints/
+**/checkpoints/
+cache_dir/
+**/cache_dir/
+*.bin
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+*.gguf
+*.onnx
+*.ggml
+
+# Archives
+*.tar
+*.tar.gz
+*.tar.zst
+*.zip
+*.7z
+
+# Runtime / envs
+miniconda3/
+**/miniconda3/
+.venv/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+wandb/
+logs/
+**/logs/
+*.log
+
+# Data / images / eval outputs
+**/real_images/
+**/synthetic_images/
+**/preference_dataset/
+**/PreTrain/
+**/Images/
+eval/runs/
+**/eval/runs/
+**/val_answers.jsonl
+**/metrics.json
+**/table4.json
+hf_cache/
+**/hf_cache/
+bundles/
+**/bundles/
+transfer/
+**/transfer/
+results/
+**/results/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp

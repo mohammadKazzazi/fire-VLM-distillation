@@ -1,0 +1,32 @@
+{
+  "Qwen2.5-7B full SFT (llavaqwen2.5-7b-finetune)": {
+    "burning_object": {
+      "accuracy": 0.7055702917771883,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.7744107744107744,
+      "n": 297
+    },
+    "fire_severity": {
+      "accuracy": 0.8975741239892183,
+      "n": 742
+    },
+    "fire_rows_in_val": 754
+  },
+  "Qwen2.5-7B LoRA SFT (llavaqwen2.5-7b-finetune-lora)": {
+    "burning_object": {
+      "accuracy": 0.7082228116710876,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.7935483870967742,
+      "n": 310
+    },
+    "fire_severity": {
+      "accuracy": 0.8975741239892183,
+      "n": 742
+    },
+    "fire_rows_in_val": 754
+  }
+}

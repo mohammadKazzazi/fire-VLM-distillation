@@ -1,0 +1,146 @@
+{
+  "Qwen2-7B full": {
+    "fp": [
+      {
+        "id": "non_fire_03541",
+        "image": "real_non_fire/pexels-cottonbro-5485779.jpg",
+        "image_abs": "/home/ubuntu/llava-test/LLaVA-Instruct-150K/real_non_fire/pexels-cottonbro-5485779.jpg",
+        "fire_type": "non_fire",
+        "gt": "non_fire",
+        "pred": "fire",
+        "ref_snippet": "No. This is a non-fire scene. No visible flames or clear smoke indicating an active fire are present.",
+        "pred_snippet": "Yes. A candle with a visible flame is burning inside a glass jar, which is a controlled fire (no risk)."
+      }
+    ],
+    "fn": [
+      {
+        "id": "fire_04312",
+        "image": "real_fire/images/WeChat-Image_20230511170109_jpg.rf.5c17e8199f9934d2940e317eaf119f37.jpg",
+        "image_abs": "/home/ubuntu/llava-test/LLaVA-Instruct-150K/real_fire/images/WeChat-Image_20230511170109_jpg.rf.5c17e8199f9934d2940e317eaf119f37.jpg",
+        "fire_type": "Indoor_candle_fire",
+        "gt": "fire",
+        "pred": "non_fire",
+        "ref_snippet": "Yes. Three candles are burning atop a black surface, each with a small flame, indicating a controlled fire with no risk.",
+        "pred_snippet": "No. This is a non-fire scene. No visible flames or clear smoke indicating an active fire are present."
+      },
+      {
+        "id": "fire_06775",
+        "image": "real_fire/images/pexels-farias-feijo-fotos-7933207_jpg.rf.1004832b9aa56b2626c7ec263961072e.jpg",
+        "image_abs": "/home/ubuntu/llava-test/LLaVA-Instruct-150K/real_fire/images/pexels-farias-feijo-fotos-7933207_jpg.rf.1004832b9aa56b2626c7ec263961072e.jpg",
+        "fire_type": "Indoor_candle_fire",
+        "gt": "fire",
+        "pred": "non_fire",
+        "ref_snippet": "Yes. A yellow candle is burning inside a glass, producing a small flame, which is a controlled fire (no risk).",
+        "pred_snippet": "No. This is a non-fire scene. No visible flames or clear smoke indicating an active fire are present."
+      },
+      {
+        "id": "fire_02360",
+        "image": "real_fire/images/Screenshot-2023-04-27-174403_png_jpg.rf.45d83fdae4ab4a2b614cae7112966414.jpg",
+        "image_abs": "/home/ubuntu/llava-test/LLaVA-Instruct-150K/real_fire/images/Screenshot-2023-04-27-174403_png_jpg.rf.45d83fdae4ab4a2b614cae7112966414.jpg",
+        "fire_type": "Indoor_fire",
+        "gt": "fire",
+        "pred": "non_fire",
+        "ref_snippet": "Yes. Flames are visible on the curtain beside the sofa in the living room, indicating a Moderate Fire (Medium Risk).",
+        "pred_snippet": "No. This is a non-fire scene. No visible flames or clear smoke indicating an active fire are present."
+      }
+    ]
+  },
+  "Qwen2-7B LoRA": {
+    "fp": [
+      {
+        "id": "non_fire_03541",
+        "image": "real_non_fire/pexels-cottonbro-5485779.jpg",
+        "image_abs": "/home/ubuntu/llava-test/LLaVA-Instruct-150K/real_non_fire/pexels-cottonbro-5485779.jpg",
+        "fire_type": "non_fire",
+        "gt": "non_fire",
+        "pred": "fire",
+        "ref_snippet": "No. This is a non-fire scene. No visible flames or clear smoke indicating an active fire are present.",
+        "pred_snippet": "Yes. A candle with a small flame is burning inside a glass container on a table, which is a controlled fire (no risk)."
+      }
+    ],
+    "fn": [
+      {
+        "id": "fire_02360",
+        "image": "real_fire/images/Screenshot-2023-04-27-174403_png_jpg.rf.45d83fdae4ab4a2b614cae7112966414.jpg",
+        "image_abs": "/home/ubuntu/llava-test/LLaVA-Instruct-150K/real_fire/images/Screenshot-2023-04-27-174403_png_jpg.rf.45d83fdae4ab4a2b614cae7112966414.jpg",
+        "fire_type": "Indoor_fire",
+        "gt": "fire",
+        "pred": "non_fire",
+        "ref_snippet": "Yes. Flames are visible on the curtain beside the sofa in the living room, indicating a Moderate Fire (Medium Risk).",
+        "pred_snippet": "No. This is a non-fire scene. No visible flames or clear smoke indicating an active fire are present."
+      }
+    ]
+  },
+  "Qwen2.5-7B full": {
+    "fp": [
+      {
+        "id": "non_fire_01219",
+        "image": "real_non_fire/eb21a6d46776684a_original.jpg",
+        "image_abs": "/home/ubuntu/llava-test/LLaVA-Instruct-150K/real_non_fire/eb21a6d46776684a_original.jpg",
+        "fire_type": "non_fire",
+        "gt": "non_fire",
+        "pred": "fire",
+        "ref_snippet": "No. This is a non-fire scene. No visible flames or clear smoke indicating an active fire are present.",
+        "pred_snippet": "Yes. A bright light is shining on a person's hand, creating a glowing effect, which is a controlled fire (no risk)."
+      },
+      {
+        "id": "non_fire_03541",
+        "image": "real_non_fire/pexels-cottonbro-5485779.jpg",
+        "image_abs": "/home/ubuntu/llava-test/LLaVA-Instruct-150K/real_non_fire/pexels-cottonbro-5485779.jpg",
+        "fire_type": "non_fire",
+        "gt": "non_fire",
+        "pred": "fire",
+        "ref_snippet": "No. This is a non-fire scene. No visible flames or clear smoke indicating an active fire are present.",
+        "pred_snippet": "Yes. A candle with a small flame is burning on a table, which is a controlled fire (no risk)."
+      }
+    ],
+    "fn": [
+      {
+        "id": "fire_02360",
+        "image": "real_fire/images/Screenshot-2023-04-27-174403_png_jpg.rf.45d83fdae4ab4a2b614cae7112966414.jpg",
+        "image_abs": "/home/ubuntu/llava-test/LLaVA-Instruct-150K/real_fire/images/Screenshot-2023-04-27-174403_png_jpg.rf.45d83fdae4ab4a2b614cae7112966414.jpg",
+        "fire_type": "Indoor_fire",
+        "gt": "fire",
+        "pred": "non_fire",
+        "ref_snippet": "Yes. Flames are visible on the curtain beside the sofa in the living room, indicating a Moderate Fire (Medium Risk).",
+        "pred_snippet": "No. This is a non-fire scene. No visible flames or clear smoke indicating an active fire are present."
+      }
+    ]
+  },
+  "Qwen2.5-7B LoRA": {
+    "fp": [
+      {
+        "id": "non_fire_06473",
+        "image": "real_non_fire/pexels-tim-douglas-6210768.jpg",
+        "image_abs": "/home/ubuntu/llava-test/LLaVA-Instruct-150K/real_non_fire/pexels-tim-douglas-6210768.jpg",
+        "fire_type": "non_fire",
+        "gt": "non_fire",
+        "pred": "fire",
+        "ref_snippet": "No. This is a non-fire scene. No visible flames or clear smoke indicating an active fire are present.",
+        "pred_snippet": "Yes. Three candles are burning on a table, providing light and ambiance, which is a controlled fire (no risk)."
+      },
+      {
+        "id": "non_fire_03541",
+        "image": "real_non_fire/pexels-cottonbro-5485779.jpg",
+        "image_abs": "/home/ubuntu/llava-test/LLaVA-Instruct-150K/real_non_fire/pexels-cottonbro-5485779.jpg",
+        "fire_type": "non_fire",
+        "gt": "non_fire",
+        "pred": "fire",
+        "ref_snippet": "No. This is a non-fire scene. No visible flames or clear smoke indicating an active fire are present.",
+        "pred_snippet": "Yes. A candle with a small flame is burning on a table, which is a controlled fire (no risk)."
+      }
+    ],
+    "fn": [
+      {
+        "id": "fire_02360",
+        "image": "real_fire/images/Screenshot-2023-04-27-174403_png_jpg.rf.45d83fdae4ab4a2b614cae7112966414.jpg",
+        "image_abs": "/home/ubuntu/llava-test/LLaVA-Instruct-150K/real_fire/images/Screenshot-2023-04-27-174403_png_jpg.rf.45d83fdae4ab4a2b614cae7112966414.jpg",
+        "fire_type": "Indoor_fire",
+        "gt": "fire",
+        "pred": "non_fire",
+        "ref_snippet": "Yes. Flames are visible on the curtain beside the sofa in the living room, indicating a Moderate Fire (Medium Risk).",
+        "pred_snippet": "No. This is a non-fire scene. No visible flames or clear smoke indicating an active fire are present."
+      }
+    ]
+  }
+}

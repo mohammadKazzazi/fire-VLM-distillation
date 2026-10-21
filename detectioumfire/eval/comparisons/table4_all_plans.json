@@ -1,0 +1,572 @@
+{
+  "Plan 4 v4 kd_lm (Qwen2.5-0.5B) seed42": {
+    "burning_object": {
+      "accuracy": 0.6976127320954907,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.7295597484276729,
+      "n": 318
+    },
+    "fire_severity": {
+      "accuracy": 0.8712737127371274,
+      "n": 738
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Qwen2.5-1.5B) seed42": {
+    "burning_object": {
+      "accuracy": 0.6896551724137931,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.7605177993527508,
+      "n": 309
+    },
+    "fire_severity": {
+      "accuracy": 0.8729729729729729,
+      "n": 740
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Qwen2.5-3B) seed42": {
+    "burning_object": {
+      "accuracy": 0.6936339522546419,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8209459459459459,
+      "n": 296
+    },
+    "fire_severity": {
+      "accuracy": 0.8896457765667575,
+      "n": 734
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Gemma2-2B) seed42": {
+    "burning_object": {
+      "accuracy": 0.6856763925729443,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.7635135135135135,
+      "n": 296
+    },
+    "fire_severity": {
+      "accuracy": 0.8817934782608695,
+      "n": 736
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Llama3-3B) seed42": {
+    "burning_object": {
+      "accuracy": 0.7015915119363395,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8048780487804879,
+      "n": 287
+    },
+    "fire_severity": {
+      "accuracy": 0.8921832884097035,
+      "n": 742
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Llama3-1B) seed42": {
+    "burning_object": {
+      "accuracy": 0.6896551724137931,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.7796610169491526,
+      "n": 295
+    },
+    "fire_severity": {
+      "accuracy": 0.8773584905660378,
+      "n": 742
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Qwen3-4B) seed42": {
+    "burning_object": {
+      "accuracy": 0.7029177718832891,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.797427652733119,
+      "n": 311
+    },
+    "fire_severity": {
+      "accuracy": 0.8953804347826086,
+      "n": 736
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Qwen2.5-0.5B) seed123": {
+    "burning_object": {
+      "accuracy": 0.7082228116710876,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.7725856697819314,
+      "n": 321
+    },
+    "fire_severity": {
+      "accuracy": 0.9013513513513514,
+      "n": 740
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Qwen2.5-1.5B) seed123": {
+    "burning_object": {
+      "accuracy": 0.7002652519893899,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.7727272727272727,
+      "n": 308
+    },
+    "fire_severity": {
+      "accuracy": 0.8908355795148248,
+      "n": 742
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Qwen2.5-3B) seed123": {
+    "burning_object": {
+      "accuracy": 0.7082228116710876,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8105263157894737,
+      "n": 285
+    },
+    "fire_severity": {
+      "accuracy": 0.9079837618403248,
+      "n": 739
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Gemma2-2B) seed123": {
+    "burning_object": {
+      "accuracy": 0.7082228116710876,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8,
+      "n": 305
+    },
+    "fire_severity": {
+      "accuracy": 0.9050203527815468,
+      "n": 737
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Llama3-3B) seed123": {
+    "burning_object": {
+      "accuracy": 0.7188328912466844,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8169934640522876,
+      "n": 306
+    },
+    "fire_severity": {
+      "accuracy": 0.9016172506738545,
+      "n": 742
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Llama3-1B) seed123": {
+    "burning_object": {
+      "accuracy": 0.6909814323607427,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.7903225806451613,
+      "n": 310
+    },
+    "fire_severity": {
+      "accuracy": 0.9013513513513514,
+      "n": 740
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Qwen3-4B) seed123": {
+    "burning_object": {
+      "accuracy": 0.7082228116710876,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8161290322580645,
+      "n": 310
+    },
+    "fire_severity": {
+      "accuracy": 0.9012178619756428,
+      "n": 739
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Qwen2.5-0.5B) seed456": {
+    "burning_object": {
+      "accuracy": 0.6923076923076923,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.7774193548387097,
+      "n": 310
+    },
+    "fire_severity": {
+      "accuracy": 0.9016172506738545,
+      "n": 742
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Qwen2.5-1.5B) seed456": {
+    "burning_object": {
+      "accuracy": 0.7029177718832891,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8044871794871795,
+      "n": 312
+    },
+    "fire_severity": {
+      "accuracy": 0.8896366083445492,
+      "n": 743
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Qwen2.5-3B) seed456": {
+    "burning_object": {
+      "accuracy": 0.7015915119363395,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8109965635738832,
+      "n": 291
+    },
+    "fire_severity": {
+      "accuracy": 0.9016172506738545,
+      "n": 742
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Gemma2-2B) seed456": {
+    "burning_object": {
+      "accuracy": 0.7029177718832891,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8148148148148148,
+      "n": 297
+    },
+    "fire_severity": {
+      "accuracy": 0.9009497964721845,
+      "n": 737
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Llama3-3B) seed456": {
+    "burning_object": {
+      "accuracy": 0.7161803713527851,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8344370860927153,
+      "n": 302
+    },
+    "fire_severity": {
+      "accuracy": 0.9056603773584906,
+      "n": 742
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Llama3-1B) seed456": {
+    "burning_object": {
+      "accuracy": 0.6962864721485411,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8053691275167785,
+      "n": 298
+    },
+    "fire_severity": {
+      "accuracy": 0.9001349527665317,
+      "n": 741
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Qwen3-4B) seed456": {
+    "burning_object": {
+      "accuracy": 0.7214854111405835,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8256578947368421,
+      "n": 304
+    },
+    "fire_severity": {
+      "accuracy": 0.8998646820027063,
+      "n": 739
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 only_kd (Qwen2.5-0.5B) seed42": {
+    "burning_object": {
+      "accuracy": 0.6976127320954907,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8296529968454258,
+      "n": 317
+    },
+    "fire_severity": {
+      "accuracy": 0.892328398384926,
+      "n": 743
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 only_kd (Qwen2.5-1.5B) seed42": {
+    "burning_object": {
+      "accuracy": 0.713527851458886,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8073089700996677,
+      "n": 301
+    },
+    "fire_severity": {
+      "accuracy": 0.894878706199461,
+      "n": 742
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 only_kd (Qwen2.5-3B) seed42": {
+    "burning_object": {
+      "accuracy": 0.6803713527851459,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8154362416107382,
+      "n": 298
+    },
+    "fire_severity": {
+      "accuracy": 0.8862690707350902,
+      "n": 721
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 only_kd (Gemma2-2B) seed42": {
+    "burning_object": {
+      "accuracy": 0.7095490716180372,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8095238095238095,
+      "n": 336
+    },
+    "fire_severity": {
+      "accuracy": 0.8853868194842407,
+      "n": 698
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 only_kd (Llama3-3B) seed42": {
+    "burning_object": {
+      "accuracy": 0.7214854111405835,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8081761006289309,
+      "n": 318
+    },
+    "fire_severity": {
+      "accuracy": 0.8844086021505376,
+      "n": 744
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 only_kd (Llama3-1B) seed42": {
+    "burning_object": {
+      "accuracy": 0.7015915119363395,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8065573770491803,
+      "n": 305
+    },
+    "fire_severity": {
+      "accuracy": 0.8803763440860215,
+      "n": 744
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 only_kd (Qwen3-4B) seed42": {
+    "burning_object": {
+      "accuracy": 0.7294429708222812,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8237179487179487,
+      "n": 312
+    },
+    "fire_severity": {
+      "accuracy": 0.8955223880597015,
+      "n": 737
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Qwen3-0.6B MobileCLIP) seed42": {
+    "burning_object": {
+      "accuracy": 0.6737400530503979,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8,
+      "n": 330
+    },
+    "fire_severity": {
+      "accuracy": 0.8331053351573188,
+      "n": 731
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Qwen3-0.6B MobileCLIP) seed123": {
+    "burning_object": {
+      "accuracy": 0.6843501326259946,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8056426332288401,
+      "n": 319
+    },
+    "fire_severity": {
+      "accuracy": 0.8299039780521262,
+      "n": 729
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Qwen3-0.6B MobileCLIP) seed456": {
+    "burning_object": {
+      "accuracy": 0.6631299734748011,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8312101910828026,
+      "n": 314
+    },
+    "fire_severity": {
+      "accuracy": 0.833103448275862,
+      "n": 725
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Qwen3-0.6B CLIP-L) seed42": {
+    "burning_object": {
+      "accuracy": 0.6737400530503979,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.7492260061919505,
+      "n": 323
+    },
+    "fire_severity": {
+      "accuracy": 0.8893387314439946,
+      "n": 741
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Qwen3-0.6B CLIP-L) seed123": {
+    "burning_object": {
+      "accuracy": 0.6724137931034483,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.7621951219512195,
+      "n": 328
+    },
+    "fire_severity": {
+      "accuracy": 0.8921832884097035,
+      "n": 742
+    },
+    "fire_rows_in_val": 754
+  },
+  "Plan 4 v4 kd_lm (Qwen3-0.6B CLIP-L) seed456": {
+    "burning_object": {
+      "accuracy": 0.6816976127320955,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.774294670846395,
+      "n": 319
+    },
+    "fire_severity": {
+      "accuracy": 0.8903924221921515,
+      "n": 739
+    },
+    "fire_rows_in_val": 754
+  },
+  "Teacher LoRA 7B (Qwen2.5)": {
+    "burning_object": {
+      "accuracy": 0.7082228116710876,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.7935483870967742,
+      "n": 310
+    },
+    "fire_severity": {
+      "accuracy": 0.8975741239892183,
+      "n": 742
+    },
+    "fire_rows_in_val": 754
+  },
+  "Teacher LoRA 9B (Gemma2)": {
+    "burning_object": {
+      "accuracy": 0.7055702917771883,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8063492063492064,
+      "n": 315
+    },
+    "fire_severity": {
+      "accuracy": 0.8968792401628223,
+      "n": 737
+    },
+    "fire_rows_in_val": 754
+  },
+  "Teacher LoRA 8B (Llama3)": {
+    "burning_object": {
+      "accuracy": 0.7201591511936339,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8311688311688312,
+      "n": 308
+    },
+    "fire_severity": {
+      "accuracy": 0.892328398384926,
+      "n": 743
+    },
+    "fire_rows_in_val": 754
+  },
+  "Teacher LoRA 8B (Qwen3)": {
+    "burning_object": {
+      "accuracy": 0.7188328912466844,
+      "n": 754
+    },
+    "environment": {
+      "accuracy": 0.8366013071895425,
+      "n": 306
+    },
+    "fire_severity": {
+      "accuracy": 0.9034013605442177,
+      "n": 735
+    },
+    "fire_rows_in_val": 754
+  }
+}
