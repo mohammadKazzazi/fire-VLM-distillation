@@ -1,10 +1,14 @@
 # Distilling Vision-Language Models for On-Device Fire Understanding
 
-Official implementation of teacher–student distillation for fire-specialized vision-language models that run fully on device.
+Official implementation of [Distilling Vision-Language Models for On-Device Fire Understanding](https://arxiv.org/abs/2609.05782).
 
-Mohammad Kazzazi<sup>2</sup>, Zixuan Liu<sup>1</sup>, Siavash Khajavi<sup>1</sup>
+**Mohammad Kazzazi**<sup>1\*</sup>, **Zixuan Liu**<sup>2\*†</sup>, **Siavash Khajavi**<sup>2†</sup>
 
-<sup>1</sup>Detectium &emsp; <sup>2</sup>EPFL
+<sup>1</sup>EPFL, Lausanne, Switzerland  
+<sup>2</sup>Detectium, Espoo, Finland
+
+<sup>\*</sup>Equal contribution. <sup>†</sup>Corresponding authors.  
+[seyedmohammad.ojaghkazazi@epfl.ch](mailto:seyedmohammad.ojaghkazazi@epfl.ch), [zixuan@detectium.io](mailto:zixuan@detectium.io), [siavash.khajavi@aalto.fi](mailto:siavash.khajavi@aalto.fi)
 
 Large vision-language models can tell a hazardous fire from a controlled flame, but they are too large for an embedded fire sensor. This repository fine-tunes a fire-specialized teacher, then distills it into a small student from the same model family. Students keep most of the teacher’s fire-understanding behavior and can be deployed without sending images off the device.
 
@@ -166,9 +170,14 @@ On the device, llama.cpp `llama-mtmd-cli` loads the language GGUF and the mmproj
 
 ```bibtex
 @article{kazzazi2026firevlm,
-  title   = {Distilling Vision-Language Models for On-Device Fire Understanding},
-  author  = {Kazzazi, Mohammad and Liu, Zixuan and Khajavi, Siavash},
-  year    = {2026}
+  title         = {Distilling Vision-Language Models for On-Device Fire Understanding},
+  author        = {Kazzazi, Mohammad and Liu, Zixuan and Khajavi, Siavash},
+  journal       = {arXiv preprint arXiv:2609.05782},
+  year          = {2026},
+  eprint        = {2609.05782},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2609.05782}
 }
 ```
 
