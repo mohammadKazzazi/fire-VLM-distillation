@@ -148,7 +148,19 @@ python detectioumfire/eval/lib/score_fire_reasoning_table4.py \
 
 ## On-device inference
 
-`deploy/` merges a distilled student, exports it, and runs the fire prompt used on the Detectium sensor. Start from `deploy/config/students.env.example` and `deploy/scripts/merge_and_bundle.sh`.
+CLIP students are not run as PyTorch or ONNX on the sensor. Each LoRA adapter is merged, converted to a Q8_0 GGUF language model, and paired with its own CLIP mmproj (F16). MobileCLIP-S2 has no llama.cpp image encoder, so that student stays PyTorch on CPU.
+
+```bash
+# Merge one student LoRA and write llm/ + llava.projector
+python deploy/scripts/export_student_generic.py
+
+# Q8_0 language GGUF + CLIP mmproj, with the family chat template baked in
+bash deploy/scripts/convert_one_kd_lm_gguf.sh /path/to/registry.json <student-slug>
+```
+
+Chat templates are in `deploy/bundles/gguf/` (`llava_qwen_phi.jinja`, `llava_llama3.jinja`, `llava_gemma2.jinja`, `llava_qwen3.jinja`). A wrong template changes the false-positive rate, so each family keeps its own file.
+
+On the device, llama.cpp `llama-mtmd-cli` loads the language GGUF and the mmproj. `deploy/pi/run_one_image.sh` is the one-image runner used for the Qwen2.5-0.5B student: 4 threads, temperature 0, context 4096. Build llama.cpp on the target CPU with `deploy/pi/build_llamacpp.sh`. Validation of the GGUF models is `deploy/fire_detect/eval_gguf_detectium_val.py`.
 
 ## Citation
 

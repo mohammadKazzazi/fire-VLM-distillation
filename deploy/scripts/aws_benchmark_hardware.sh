@@ -62,8 +62,15 @@ case "${PROFILE}" in
     export DEVICE=cpu
     export LOAD_4BIT=0
     export LOAD_8BIT=0
+    # Same protocol as H1–H3; CPU adaptations only (threads + KV cache + optional INT8).
+    export CPU_OPT="${CPU_OPT:-1}"
+    # Dynamic INT8 did not beat fp32+oneDNN on Graviton smoke; keep opt-in.
+    export CPU_INT8="${CPU_INT8:-0}"
+    export CPU_COMPILE="${CPU_COMPILE:-0}"
+    export CPU_THREADS="${CPU_THREADS:-$(nproc)}"
+    export CPU_USE_CACHE="${CPU_USE_CACHE:-0}"
     EXPECTED_INSTANCE="c7g.2xlarge"
-    MAPS_TO="ARM64 CPU-only feasibility baseline"
+    MAPS_TO="ARM64 CPU-only feasibility baseline (CPU_OPT adaptations)"
     ;;
   *)
     echo "Unknown profile ${PROFILE}. Use H1, H2, H3, or H4." >&2
@@ -86,6 +93,9 @@ echo "Protocol defaults: warmup=${WARMUP} runs=${RUNS} restarts=${RESTARTS} conc
 echo "  (pass --warmup/--runs/--restarts/--mode to override)"
 if [[ -n "${GPU_MEMORY_FRACTION:-}" ]]; then
   echo "GPU memory cap:    ${GPU_MEMORY_FRACTION}"
+fi
+if [[ "${PROFILE}" == "H4" ]]; then
+  echo "CPU adaptations:   CPU_OPT=${CPU_OPT:-0} CPU_INT8=${CPU_INT8:-0} CPU_COMPILE=${CPU_COMPILE:-0} threads=${CPU_THREADS:-auto}"
 fi
 echo ""
 

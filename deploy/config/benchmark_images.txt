@@ -1,0 +1,10 @@
+/home/ubuntu/llavamod/llava-deploy-h1-h4-20260716/workspace/Deploy/samples/bench_images/fire_040f06a52a73701c_original_jpg.rf.825694b840aa4a484a4fddd0c80a5db4.jpg
+/home/ubuntu/llavamod/llava-deploy-h1-h4-20260716/workspace/Deploy/samples/bench_images/fire_08540673d21b406a_original_jpg.rf.2d651b84a37f48104736c478ed057ec6.jpg
+/home/ubuntu/llavamod/llava-deploy-h1-h4-20260716/workspace/Deploy/samples/bench_images/fire_14950f466e87a413_original_jpg.rf.c254998ed410f12c069be6804e0e403a.jpg
+/home/ubuntu/llavamod/llava-deploy-h1-h4-20260716/workspace/Deploy/samples/bench_images/fire_19f8e1fd2e27a48d_original_jpg.rf.cec303b57efe9df258a2beed0d226929.jpg
+/home/ubuntu/llavamod/llava-deploy-h1-h4-20260716/workspace/Deploy/samples/bench_images/fire_1ba5fa63de5e0099_original_jpg.rf.3e3fb4b7f8c4ac19b8a20c526e69f796.jpg
+/home/ubuntu/llavamod/llava-deploy-h1-h4-20260716/workspace/Deploy/samples/bench_images/fire_1c676029afd0847d_original_jpg.rf.055fd2259433decf55716241e827885d.jpg
+/home/ubuntu/llavamod/llava-deploy-h1-h4-20260716/workspace/Deploy/samples/bench_images/fire_1cc1e78ef3e7d218_original_jpg.rf.c86f4ef2643cd49370d01a9162fc0ccb.jpg
+/home/ubuntu/llavamod/llava-deploy-h1-h4-20260716/workspace/Deploy/samples/bench_images/fire_1dda2493eedfb51d_original_jpg.rf.d5791d22284bf9807ecd431260edc654.jpg
+/home/ubuntu/llavamod/llava-deploy-h1-h4-20260716/workspace/Deploy/samples/bench_images/fire_2020b5bde251be54_original_jpg.rf.11487cc973390b9a5beb119e27ef1ca6.jpg
+/home/ubuntu/llavamod/llava-deploy-h1-h4-20260716/workspace/Deploy/samples/bench_images/fire_20dc426d212aab74_original_jpg.rf.18d231c9e2fca1d784969b421be84e2f.jpg

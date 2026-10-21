@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Low-RAM export for fire students → HF LLM + llava.projector.
+Low-RAM export for Gemma2/Llama3 fire students → HF LLM + llava.projector.
 
 Skips loading CLIP vision tower (not needed for GGUF LM/mmproj export).
-Uses float16 + merge_and_unload.
+Uses float16 + merge_and_unload to stay within ~16GB + swap.
 """
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ from pathlib import Path
 
 import torch
 from peft import PeftModel
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
 
 _DEPLOY = Path(__file__).resolve().parents[1]
 
@@ -25,15 +25,6 @@ PRESETS = {
         "lora_env": "LLAMA3_1B_LORA",
         "base_env": "LLAMA3_1B_BASE",
         "default_base": "meta-llama/Llama-3.2-1B-Instruct",
-        "arch": "LlamaForCausalLM",
-        "model_type": "llama",
-        "conv_jinja": "llava_llama3.jinja",
-        "conv_name": "llava_llama3 (llama_3)",
-    },
-    "llama3-3b": {
-        "lora_env": "LLAMA3_3B_LORA",
-        "base_env": "LLAMA3_3B_BASE",
-        "default_base": "meta-llama/Llama-3.2-3B-Instruct",
         "arch": "LlamaForCausalLM",
         "model_type": "llama",
         "conv_jinja": "llava_llama3.jinja",
@@ -48,31 +39,12 @@ PRESETS = {
         "conv_jinja": "llava_gemma2.jinja",
         "conv_name": "llava_gemma2 (gemma_2)",
     },
-    "qwen3-0.6b": {
-        "lora_env": "QWEN3_0_6B_LORA",
-        "base_env": "QWEN3_0_6B_BASE",
-        "default_base": "Qwen/Qwen3-0.6B",
-        "arch": "Qwen3ForCausalLM",
-        "model_type": "qwen3",
-        "conv_jinja": "llava_qwen3.jinja",
-        "conv_name": "llava_qwen3 (qwen3)",
-    },
-    "qwen3-4b": {
-        "lora_env": "QWEN3_4B_LORA",
-        "base_env": "QWEN3_4B_BASE",
-        "default_base": "Qwen/Qwen3-4B",
-        "arch": "Qwen3ForCausalLM",
-        "model_type": "qwen3",
-        "conv_jinja": "llava_qwen3.jinja",
-        "conv_name": "llava_qwen3 (qwen3)",
-    },
 }
 
 
 def _load_env(path: Path) -> None:
     if not path.is_file():
         return
-    raw: dict[str, str] = {}
     for line in path.read_text().splitlines():
         line = line.strip()
         if not line or line.startswith("#") or "=" not in line:
@@ -80,19 +52,7 @@ def _load_env(path: Path) -> None:
         if line.startswith("export "):
             line = line[7:]
         k, _, v = line.partition("=")
-        raw[k.strip()] = v.strip().strip('"').strip("'")
-    # First pass: seed absolute / plain values
-    for k, v in raw.items():
-        if "${" not in v:
-            os.environ.setdefault(k, v)
-    # Second pass: expand ${VAR} references (bash-style students.env)
-    for k, v in raw.items():
-        expanded = os.path.expandvars(v)
-        # Prefer expanded when it resolves differently or was unset
-        if k not in os.environ or "${" in os.environ.get(k, ""):
-            os.environ[k] = expanded
-        elif "${" in v:
-            os.environ[k] = expanded
+        os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
 
 
 def _load_projector(lora: Path) -> dict:
@@ -141,6 +101,7 @@ def main() -> None:
 
     print(f"Lean export preset={args.preset}\n  lora={lora}\n  base={base}\n  out={out}", flush=True)
 
+    # Projector from non_lora_trainables (no CLIP load)
     proj = _load_projector(lora)
     proj_path = out / "llava.projector"
     torch.save(proj, proj_path)
@@ -149,11 +110,12 @@ def main() -> None:
     gc.collect()
 
     print("Loading base LM (fp16, no vision) ...", flush=True)
-    tok = AutoTokenizer.from_pretrained(base, use_fast=False)
+    tok = AutoTokenizer.from_pretrained(base, use_fast=False, local_files_only=True)
     lm = AutoModelForCausalLM.from_pretrained(
         base,
         torch_dtype=torch.float16,
         low_cpu_mem_usage=True,
+        local_files_only=True,
     )
     print("Loading LoRA + merge ...", flush=True)
     lm = PeftModel.from_pretrained(lm, str(lora))
@@ -176,8 +138,6 @@ def main() -> None:
     cfg_path.write_text(json.dumps(cfg, indent=2) + "\n")
 
     jinja_src = _DEPLOY / "bundles" / "gguf" / preset["conv_jinja"]
-    if not jinja_src.is_file():
-        raise FileNotFoundError(jinja_src)
     jinja_text = jinja_src.read_text()
     (llm_dir / "chat_template.jinja").write_text(jinja_text)
     tok_cfg_path = llm_dir / "tokenizer_config.json"
@@ -185,6 +145,7 @@ def main() -> None:
     tok_cfg["chat_template"] = jinja_text
     tok_cfg_path.write_text(json.dumps(tok_cfg, indent=2) + "\n")
 
+    # mm_hidden from CLIP-L = 1024 for these students
     meta = {
         "preset": args.preset,
         "base": base,

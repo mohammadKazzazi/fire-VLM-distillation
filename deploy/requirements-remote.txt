@@ -1,0 +1,10 @@
+transformers>=4.45,<5
+peft>=0.10
+accelerate
+sentencepiece
+protobuf
+einops
+pillow
+timm
+shortuuid
+huggingface_hub

@@ -1,0 +1,15 @@
+# Raspberry Pi OS (64-bit) — system packages for Qwen2.5-0.5B GGUF inference
+# This model runs with llama.cpp only. No Python / PyTorch / pip packages are required.
+#
+# Install on the Pi:
+#   sudo apt-get update
+#   sudo apt-get install -y $(grep -v '^#' requirements.txt | grep -v '^$' | tr '\n' ' ')
+
+git
+cmake
+build-essential
+libopenblas-dev
+libssl-dev
+libgomp1
+curl
+ca-certificates

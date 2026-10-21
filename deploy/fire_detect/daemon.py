@@ -46,10 +46,7 @@ def _resolve_preset(env: dict) -> dict:
     mapping = {
         "qwen0.5b": ("QWEN0_5B_BUNDLE", "QWEN0_5B_BASE", "QWEN0_5B_CONV", "QWEN0_5B_LORA"),
         "llama3-1b": ("LLAMA3_1B_BUNDLE", "LLAMA3_1B_BASE", "LLAMA3_1B_CONV", "LLAMA3_1B_LORA"),
-        "gemma2-2b": ("GEMMA2_2B_BUNDLE", "GEMMA2_2B_BASE", "GEMMA2_2B_CONV", "GEMMA2_2B_LORA"),
         "qwen3-0.6b": ("QWEN3_0_6B_BUNDLE", "QWEN3_0_6B_BASE", "QWEN3_0_6B_CONV", "QWEN3_0_6B_LORA"),
-        "llama3-3b": ("LLAMA3_3B_BUNDLE", "LLAMA3_3B_BASE", "LLAMA3_3B_CONV", "LLAMA3_3B_LORA"),
-        "qwen3-4b": ("QWEN3_4B_BUNDLE", "QWEN3_4B_BASE", "QWEN3_4B_CONV", "QWEN3_4B_LORA"),
     }
     if preset not in mapping:
         raise ValueError(f"Unknown STUDENT_PRESET={preset}")

@@ -45,29 +45,11 @@ resolve_preset() {
       CONV_MODE="${LLAMA3_1B_CONV}"
       BUNDLE_PATH="${LLAMA3_1B_BUNDLE}"
       ;;
-    gemma2-2b)
-      LORA_PATH="${GEMMA2_2B_LORA}"
-      MODEL_BASE="${GEMMA2_2B_BASE}"
-      CONV_MODE="${GEMMA2_2B_CONV}"
-      BUNDLE_PATH="${GEMMA2_2B_BUNDLE}"
-      ;;
     qwen3-0.6b)
       LORA_PATH="${QWEN3_0_6B_LORA}"
       MODEL_BASE="${QWEN3_0_6B_BASE}"
       CONV_MODE="${QWEN3_0_6B_CONV}"
       BUNDLE_PATH="${QWEN3_0_6B_BUNDLE}"
-      ;;
-    llama3-3b)
-      LORA_PATH="${LLAMA3_3B_LORA}"
-      MODEL_BASE="${LLAMA3_3B_BASE}"
-      CONV_MODE="${LLAMA3_3B_CONV}"
-      BUNDLE_PATH="${LLAMA3_3B_BUNDLE}"
-      ;;
-    qwen3-4b)
-      LORA_PATH="${QWEN3_4B_LORA}"
-      MODEL_BASE="${QWEN3_4B_BASE}"
-      CONV_MODE="${QWEN3_4B_CONV}"
-      BUNDLE_PATH="${QWEN3_4B_BUNDLE}"
       ;;
     *)
       echo "Unknown STUDENT_PRESET=${STUDENT_PRESET}" >&2

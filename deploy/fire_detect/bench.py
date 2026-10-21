@@ -25,20 +25,11 @@ if str(_DEPLOY_ROOT) not in sys.path:
     sys.path.insert(0, str(_DEPLOY_ROOT))
 
 from fire_detect.daemon import _load_env_file, _resolve_preset  # noqa: E402
-from fire_detect.inference import (  # noqa: E402
-    TIMING_BOUNDARY,
-    TIMING_BOUNDARY_DEF,
-    FireDetectResult,
-    FireDetector,
-)
+from fire_detect.inference import FireDetectResult, FireDetector  # noqa: E402
+from fire_detect.cpu_opt import cpu_inference_settings  # noqa: E402
 
 CLASSIFICATION_MAX_TOKENS = 8
 REASONING_MAX_TOKENS = 64
-
-try:
-    from PIL import Image
-except ImportError:  # pragma: no cover
-    Image = None  # type: ignore
 
 
 def _ru_max_rss_mb() -> float:
@@ -161,16 +152,9 @@ def _unload_detector(detector: FireDetector) -> None:
         torch.cuda.reset_peak_memory_stats()
 
 
-def _preload_images(paths: list[str]):
-    """Load RGB PIL images before the timed region (disk I/O excluded from latency)."""
-    if Image is None:
-        raise RuntimeError("Pillow is required for deployment benchmarks")
-    return [Image.open(p).convert("RGB") for p in paths]
-
-
 def _run_sequential(
     detector: FireDetector,
-    images: list,
+    images: list[str],
     prompt: str,
     *,
     max_new_tokens: int,
@@ -195,7 +179,7 @@ def _run_sequential(
 
 def _run_concurrent(
     detector: FireDetector,
-    images: list,
+    images: list[str],
     prompt: str,
     *,
     max_new_tokens: int,
@@ -206,7 +190,7 @@ def _run_concurrent(
     latencies: list[float] = []
     ttfts: list[float] = []
 
-    def _one(img) -> FireDetectResult:
+    def _one(img: str) -> FireDetectResult:
         with lock:
             return detector.detect(
                 img,
@@ -241,11 +225,6 @@ def _benchmark_mode(
     max_new_tokens = CLASSIFICATION_MAX_TOKENS if mode == "classification" else REASONING_MAX_TOKENS
     measure_ttft = mode == "reasoning"
 
-    # Preload once so measured latency never includes disk I/O.
-    need = max(1, warmup + runs)
-    paths = [images[i % len(images)] for i in range(need)]
-    preloaded = _preload_images(paths)
-
     all_warm_latencies: list[float] = []
     all_ttfts: list[float] = []
     load_times: list[float] = []
@@ -261,15 +240,16 @@ def _benchmark_mode(
         detector, load_s = _load_detector(cfg, device, max_new_tokens)
         load_times.append(load_s)
 
+        cold_img = images[0]
         cold = detector.detect(
-            preloaded[0],
+            cold_img,
             prompt,
             max_new_tokens=max_new_tokens,
             measure_ttft=measure_ttft,
         )
         cold_latencies.append(cold.latency_ms)
 
-        warmup_images = preloaded[:warmup]
+        warmup_images = images[:warmup]
         _run_sequential(
             detector,
             warmup_images,
@@ -278,7 +258,7 @@ def _benchmark_mode(
             measure_ttft=False,
         )
 
-        measured_images = preloaded[warmup : warmup + runs]
+        measured_images = images[warmup : warmup + runs]
         if concurrency <= 1:
             latencies, ttfts, _ = _run_sequential(
                 detector,
@@ -317,7 +297,6 @@ def _benchmark_mode(
         "restarts": restarts,
         "concurrency": concurrency,
         "total_measured_requests": len(all_warm_latencies),
-        "timing_boundary": TIMING_BOUNDARY,
         "load_time_s": {
             "mean": round(statistics.mean(load_times), 3),
             "min": round(min(load_times), 3),
@@ -394,13 +373,16 @@ def main() -> None:
         "inference_settings": {
             "precision": "bf16-on-cuda" if device == "cuda" else "fp32-on-cpu",
             "quantization": "4bit" if os.environ.get("LOAD_4BIT") == "1" else (
-                "8bit" if os.environ.get("LOAD_8BIT") == "1" else "none"
+                "8bit" if os.environ.get("LOAD_8BIT") == "1" else (
+                    "dynamic_int8" if device == "cpu" and os.environ.get("CPU_INT8") == "1" else "none"
+                )
             ),
             "batch_size": 1,
             "temperature": float(os.environ.get("TEMPERATURE", "0.0")),
             "classification_max_new_tokens": CLASSIFICATION_MAX_TOKENS,
             "reasoning_max_new_tokens": REASONING_MAX_TOKENS,
             "gpu_memory_fraction": gpu_fraction,
+            "cpu_adaptations": cpu_inference_settings() if device == "cpu" else None,
         },
         "benchmark_procedure": {
             "warmup_per_restart": args.warmup,
@@ -408,13 +390,6 @@ def main() -> None:
             "restarts": args.restarts,
             "concurrency": args.concurrency,
             "modes": modes,
-        },
-        "timing": {
-            "boundary": TIMING_BOUNDARY,
-            "definition": TIMING_BOUNDARY_DEF,
-            "ttft": "t0 → first output text token",
-            "e2e": "t0 → generation complete (CUDA synchronized on GPU)",
-            "excluded": ["model_load", "disk_io"],
         },
     }
 

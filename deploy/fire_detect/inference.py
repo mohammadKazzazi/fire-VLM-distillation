@@ -6,12 +6,13 @@ Designed for offline edge deployment (no cloud inference). Supports CPU and CUDA
 """
 from __future__ import annotations
 
+import os
 import re
 import sys
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
 import torch
 from PIL import Image
@@ -33,14 +34,6 @@ def _ensure_llavamod_on_path(llava_mod_root: Optional[str] = None) -> Path:
     return root
 
 
-# Shared with GGUF / llama.cpp bench (see Deploy/notes/TIMING_PROTOCOL.md).
-TIMING_BOUNDARY = "request_ready"
-TIMING_BOUNDARY_DEF = (
-    "t0 after RGB image is in memory; includes vision preprocess, device H2D, "
-    "encode, prefill, and decode. Excludes model load and disk I/O."
-)
-
-
 @dataclass
 class FireDetectResult:
     prompt: str
@@ -51,7 +44,6 @@ class FireDetectResult:
     model_path: str
     ttft_ms: Optional[float] = None
     total_generation_ms: Optional[float] = None
-    timing_boundary: str = TIMING_BOUNDARY
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -96,12 +88,20 @@ class FireDetector:
         from llavamod.utils import disable_torch_init
 
         from fire_detect.model_utils import patch_model_for_inference
+        from fire_detect.cpu_opt import (
+            configure_cpu_runtime,
+            cpu_opt_enabled,
+            optimize_cpu_model,
+        )
 
         self._conv_mode = conv_mode
         self._max_new_tokens = max_new_tokens
         self._temperature = temperature
         self._device = device
         self._model_path = model_path
+        self._cpu_runtime: dict[str, Any] = {}
+        self._cpu_adaptations: dict[str, Any] = {}
+        self._use_cache = False  # CUDA default: stable multimodal decode on transformers >= 4.50
 
         self._SeparatorStyle = SeparatorStyle
         self._conv_templates = conv_templates
@@ -115,6 +115,17 @@ class FireDetector:
         self._KeywordsStoppingCriteria = KeywordsStoppingCriteria
         self._process_images = process_images
         self._tokenizer_image_token = tokenizer_image_token
+
+        if cpu_opt_enabled(device):
+            self._cpu_runtime = configure_cpu_runtime()
+            # Multimodal LLaVA + KV cache is unstable on this stack (negative pad dims).
+            # Keep cache off unless explicitly forced.
+            self._use_cache = os.environ.get("CPU_USE_CACHE", "0").strip().lower() in {
+                "1",
+                "true",
+                "yes",
+                "on",
+            }
 
         disable_torch_init()
         model_name = get_model_name_from_path(model_path)
@@ -135,8 +146,28 @@ class FireDetector:
         if device == "cuda" and torch.cuda.is_available():
             self.model.eval()
         else:
+            # H4 / CPU path. Default fp32; set CPU_DTYPE=bfloat16 on Graviton3+ for speed.
             self._device = "cpu"
+            dtype_name = os.environ.get("CPU_DTYPE", "float32").strip().lower()
+            if dtype_name in {"bf16", "bfloat16"}:
+                cpu_dtype = torch.bfloat16
+            elif dtype_name in {"fp16", "float16"}:
+                cpu_dtype = torch.float16
+            else:
+                cpu_dtype = torch.float32
+            self._cpu_dtype = cpu_dtype
+            self.model = self.model.to(device="cpu", dtype=cpu_dtype)
             self.model.eval()
+            if cpu_opt_enabled("cpu"):
+                self.model, self._cpu_adaptations = optimize_cpu_model(self.model)
+                self._cpu_adaptations["cpu_dtype"] = str(cpu_dtype).replace("torch.", "")
+                # Force cache off if INT8 path proves incompatible at runtime via env.
+                if os.environ.get("CPU_USE_CACHE", "0").strip() in {"0", "false", "no", ""}:
+                    self._use_cache = False
+                elif os.environ.get("CPU_USE_CACHE", "0").strip().lower() in {"1", "true", "yes", "on"}:
+                    self._use_cache = True
+            else:
+                self._cpu_adaptations = {"cpu_dtype": str(cpu_dtype).replace("torch.", "")}
 
     def _resolve_device(self) -> torch.device:
         if self._device == "cuda" and torch.cuda.is_available():
@@ -160,7 +191,6 @@ class FireDetector:
         max_new_tokens: Optional[int] = None,
         measure_ttft: bool = False,
     ) -> FireDetectResult:
-        # Disk I/O is outside the timed region (same contract as GGUF bench).
         if isinstance(image, (str, Path)):
             pil = Image.open(image).convert("RGB")
         else:
@@ -183,13 +213,32 @@ class FireDetector:
         conv.append_message(conv.roles[1], None)
         prompt_str = conv.get_prompt()
 
+        image_tensor = self._process_images([pil], self.image_processor, self.model.config)
+        if isinstance(image_tensor, list):
+            image_tensor = image_tensor[0]
+
+        input_ids = self._tokenizer_image_token(
+            prompt_str, self.tokenizer, self._IMAGE_TOKEN_INDEX, return_tensors="pt"
+        ).unsqueeze(0)
+
+        dev = self._resolve_device()
+        input_ids = input_ids.to(device=dev)
+        if isinstance(image_tensor, list):
+            images = [t.to(dev, dtype=torch.bfloat16 if dev.type == "cuda" else getattr(self, "_cpu_dtype", torch.float32)) for t in image_tensor]
+        else:
+            dtype = torch.bfloat16 if dev.type == "cuda" else getattr(self, "_cpu_dtype", torch.float32)
+            images = image_tensor.to(dtype=dtype, device=dev)
+
         stop_str = self._get_conv_stop_str(conv)
+        stopping = [self._KeywordsStoppingCriteria([stop_str], self.tokenizer, input_ids)]
         gen_kwargs = self._get_generate_token_kwargs(conv, self.tokenizer)
-        use_cache = False  # stable multimodal decode on transformers >= 4.50
+
         token_budget = self._max_new_tokens if max_new_tokens is None else max_new_tokens
         generate_kwargs = {
             "max_new_tokens": token_budget,
-            "use_cache": use_cache,
+            # CUDA keeps cache off for multimodal stability; CPU_OPT enables KV cache.
+            "use_cache": getattr(self, "_use_cache", False),
+            "stopping_criteria": stopping,
             **gen_kwargs,
         }
         if self._temperature > 0:
@@ -198,32 +247,9 @@ class FireDetector:
         else:
             generate_kwargs["do_sample"] = False
 
-        # request_ready: t0 → first token / completion (matches llama.cpp client clock).
         ttft_ms: Optional[float] = None
         t0 = time.perf_counter()
         with torch.inference_mode():
-            image_tensor = self._process_images([pil], self.image_processor, self.model.config)
-            if isinstance(image_tensor, list):
-                image_tensor = image_tensor[0]
-
-            input_ids = self._tokenizer_image_token(
-                prompt_str, self.tokenizer, self._IMAGE_TOKEN_INDEX, return_tensors="pt"
-            ).unsqueeze(0)
-
-            dev = self._resolve_device()
-            input_ids = input_ids.to(device=dev)
-            if isinstance(image_tensor, list):
-                images = [
-                    t.to(dev, dtype=torch.bfloat16 if dev.type == "cuda" else torch.float32)
-                    for t in image_tensor
-                ]
-            else:
-                dtype = torch.bfloat16 if dev.type == "cuda" else torch.float32
-                images = image_tensor.to(dtype=dtype, device=dev)
-
-            stopping = [self._KeywordsStoppingCriteria([stop_str], self.tokenizer, input_ids)]
-            generate_kwargs["stopping_criteria"] = stopping
-
             if measure_ttft:
                 from threading import Thread
 
@@ -252,10 +278,6 @@ class FireDetector:
                     images=images,
                     **generate_kwargs,
                 )
-
-            if dev.type == "cuda":
-                torch.cuda.synchronize(dev)
-
         total_ms = (time.perf_counter() - t0) * 1000.0
         latency_ms = total_ms
 
@@ -275,5 +297,4 @@ class FireDetector:
             model_path=self._model_path,
             ttft_ms=ttft_ms,
             total_generation_ms=total_ms,
-            timing_boundary=TIMING_BOUNDARY,
         )
